@@ -26,7 +26,7 @@ combined_table <- combined_table[,unique(features[,2])]
 mean_std_table <- select(combined_table, matches("mean|Mean|std|Std"))
 
 #combine the activities list
-act_combined <- rbind(act_test, act_tot)
+act_combined <- rbind(act_test, act_train)
 
 # replace the activity ID with the description
 act_combined <- mutate(act_combined, activities[V1,2])
@@ -46,7 +46,7 @@ activ_subject_table <- cbind("subjects" = subjects[,1],activities_table)
 group_table <- activ_subject_table %>% group_by(activities, subjects) %>% summarize_each(funs(mean))
 
 # if we want to get the same new table using only "Mean" and "std" columns
-group_table_std_mean <- activ_subject_table %>% select(matches("activities|subjects|mean|Mean|std|Std"))
+group_table_std_mean <- activ_subject_table %>% select(matches("activities|subjects|mean|Mean|std|Std")) %>%
   group_by(activities, subjects) %>% 
   summarize_each(funs(mean))
 
